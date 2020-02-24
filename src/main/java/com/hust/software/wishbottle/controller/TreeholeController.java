@@ -169,7 +169,7 @@ public class TreeholeController {
      */
     @DeleteMapping("/treehole/{id}")
     public String deletdOneByTreeholeId(@PathVariable("id") int treeholeId) throws Exception{
-        treeholeService.deleteOntById(treeholeId);
+        treeholeService.deleteOneById(treeholeId);
 
         return "success";
     }

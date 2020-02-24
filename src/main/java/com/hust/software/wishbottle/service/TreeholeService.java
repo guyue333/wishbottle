@@ -18,6 +18,6 @@ public interface TreeholeService {
 
     public TreeHole findOneById(int treeholeId);
 
-    public int deleteOntById(int treeholeId);
+    public int deleteOneById(int treeholeId);
 
 }

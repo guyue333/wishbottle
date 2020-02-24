@@ -78,7 +78,7 @@ public class TreeholeServiceImpl implements TreeholeService {
      * @return
      */
     @Override
-    public int deleteOntById(int treeholeId) {
-        return treeholeMapper.deleteOntById(treeholeId);
+    public int deleteOneById(int treeholeId) {
+        return treeholeMapper.deleteOneById(treeholeId);
     }
 }

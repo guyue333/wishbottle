@@ -67,5 +67,5 @@ public interface TreeholeMapper {
      * @return
      */
     @Update("update treehole set treehole_status = 1 where treehole_id = #{treeholeId}")
-    public int deleteOntById(int treeholeId);
+    public int deleteOneById(int treeholeId);
 }
