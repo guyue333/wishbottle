@@ -10,4 +10,5 @@ public interface UserTreeHoleReplyService {
     public int addReply(TreeHoleReply treeHoleReply);
 
     public List<TreeHoleReply> findAllReplyById(int treeholeId);
+
 }

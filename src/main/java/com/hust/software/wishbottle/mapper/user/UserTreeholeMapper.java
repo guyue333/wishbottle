@@ -1,10 +1,7 @@
 package com.hust.software.wishbottle.mapper.user;
 
 import com.hust.software.wishbottle.pojo.user.TreeHole;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -68,4 +65,58 @@ public interface UserTreeholeMapper {
      */
     @Update("update treehole set treehole_status = 1 where treehole_id = #{treeholeId}")
     public int deleteOneById(int treeholeId);
+
+    /**
+     * 根据树洞id查询树洞的评论数
+     * @param treeholeId
+     * @return
+     */
+    @Select("select count(*) from treeholereply where treehole_id = #{treeholeId}")
+    public int getReplyNumberById(int treeholeId);
+
+    /**
+     * 根据用户id和树洞id查询用户的点赞状态（1-点赞，0-未点赞）
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Select("select count(*) from userliketreehole where treehole_id = #{treeholeId} and user_id = #{userId} and like_status = 1")
+    public int getLikeStatus(@Param("treeholeId") int treeholeId, @Param("userId") int userId);
+
+    /**
+     * 插入一条用户点赞记录
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Insert("insert into userliketreehole(treehole_id,user_id,like_status) " +
+            "values(#{treeholeId},#{userId},1)")
+    public int addLikeRecord(@Param("treeholeId") int treeholeId,@Param("userId") int userId);
+
+    /**
+     * 修改点赞状态为1，表示用户点赞
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Update("update userliketreehole set like_status = 1 where treehole_id = #{treeholeId} and user_id = #{userId}")
+    public int changeStatusToLike(@Param("treeholeId") int treeholeId,@Param("userId") int userId);
+
+    /**
+     * 修改点赞状态为0，表示用户取消点赞
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Update("update userliketreehole set like_status = 0 where treehole_id = #{treeholeId} and user_id = #{userId}")
+    public int changeStatusToUnlike(@Param("treeholeId") int treeholeId,@Param("userId") int userId);
+
+    /**
+     * 查询数据库中是否有用户的点赞记录
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Select("select count(*) from userliketreehole where treehole_id = #{treeholeId} and user_id = #{userId} ")
+    public int checkRecord(@Param("treeholeId") int treeholeId,@Param("userId") int userId);
 }

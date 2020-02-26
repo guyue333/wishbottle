@@ -21,4 +21,15 @@ public interface UserTreeholeService {
 
     public int deleteOneById(int treeholeId);
 
+    public int getReplyNumberById(int treeholeId);
+
+    public int getLikeStatus(int treeholeId,int userId);
+
+    public int addLikeRecord(int treeholeId,int userId);
+
+    public int changeStatusToLike(int treeholeId,int userId);
+
+    public int changeStatusToUnlike(int treeholeId,int userId);
+
+    public int checkRecord(int treeholeId,int userId);
 }

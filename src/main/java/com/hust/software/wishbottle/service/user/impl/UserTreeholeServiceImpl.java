@@ -81,4 +81,71 @@ public class UserTreeholeServiceImpl implements UserTreeholeService {
     public int deleteOneById(int treeholeId) {
         return userTreeholeMapper.deleteOneById(treeholeId);
     }
+
+    /**
+     * 根据树洞id查询树洞的评论数
+     * @param treeholeId
+     * @return
+     */
+    @Override
+    public int getReplyNumberById(int treeholeId) {
+        return userTreeholeMapper.getReplyNumberById(treeholeId);
+    }
+
+    /**
+     * 根据用户id和树洞id查询用户的点赞状态（1-点赞，0-未点赞）
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Override
+    public int getLikeStatus(int treeholeId, int userId) {
+        return userTreeholeMapper.getLikeStatus(treeholeId,userId);
+    }
+
+    /**
+     * 插入一条用户点赞记录
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Override
+    public int addLikeRecord(int treeholeId, int userId) {
+        return userTreeholeMapper.addLikeRecord(treeholeId,userId);
+    }
+
+    /**
+     * 修改点赞状态为1，表示用户点赞
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Override
+    public int changeStatusToLike(int treeholeId, int userId) {
+        return userTreeholeMapper.changeStatusToLike(treeholeId,userId);
+    }
+
+    /**
+     * 修改点赞状态为0，表示用户取消点赞
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Override
+    public int changeStatusToUnlike(int treeholeId, int userId) {
+        return userTreeholeMapper.changeStatusToUnlike(treeholeId,userId);
+    }
+
+    /**
+     * 查询数据库中是否有用户的点赞记录
+     * @param treeholeId
+     * @param userId
+     * @return
+     */
+    @Override
+    public int checkRecord(int treeholeId, int userId) {
+        return userTreeholeMapper.checkRecord(treeholeId,userId);
+    }
+
+
 }

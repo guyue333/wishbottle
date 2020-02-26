@@ -28,4 +28,5 @@ public interface UserTreeHoleReplyMapper {
      */
     @Select("select * from treeholereply where treehole_id = #{treeholeId} order by create_time desc")
     public List<TreeHoleReply> findAllReplyById(int treeholeId);
+
 }

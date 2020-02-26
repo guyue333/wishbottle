@@ -5,6 +5,7 @@ import com.hust.software.wishbottle.pojo.user.TreeholeInfo;
 import com.hust.software.wishbottle.pojo.user.User;
 import com.hust.software.wishbottle.service.user.UserTreeholeService;
 import com.hust.software.wishbottle.service.user.UserUserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +64,9 @@ public class UserTreeholeController {
             treeholeInfo.setTreeholeStatus(treeHole.getTreeholeStatus());
             treeholeInfo.setLikedNumber(treeHole.getLikedNumber());
 
+            //2、2、3 封装树洞的评论数
+            treeholeInfo.setReplyNumber(userTreeholeService.getReplyNumberById(treeHole.getTreeholeId()));
+
             //2、3 添加到list中
             treeholeInfoList.add(treeholeInfo);
         }
@@ -113,9 +117,19 @@ public class UserTreeholeController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/addlikedNumer/{id}")
-    public String addLikedNumber(@PathVariable("id") int treeholeId) throws Exception{
+    @GetMapping("/addlikedNumer")
+    public String addLikedNumber(@RequestParam("treeholeId") int treeholeId,@Param("userId") int userId) throws Exception{
+        //把数据库中的点赞数+1
         userTreeholeService.addLikedNumberById(treeholeId);
+
+        //查询数据库中是否有用户的操作记录
+        int i = userTreeholeService.checkRecord(treeholeId, userId);
+        if(i == 0){     //数据库中没有记录，则新增一条记录
+            userTreeholeService.addLikeRecord(treeholeId,userId);
+        }else{          //如果有记录，则修改状态即可
+            userTreeholeService.changeStatusToLike(treeholeId,userId);
+        }
+
         return "点赞成功";
     }
 
@@ -125,9 +139,12 @@ public class UserTreeholeController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/minuslikedNumer/{id}")
-    public String minuslikedNumer(@PathVariable("id") int treeholeId) throws Exception{
+    @GetMapping("/minuslikedNumer")
+    public String minuslikedNumer(@Param("treeholeId") int treeholeId,@Param("userId") int userId) throws Exception{
         userTreeholeService.minusLikedNumberById(treeholeId);
+
+        //修改点赞状态
+        userTreeholeService.changeStatusToUnlike(treeholeId,userId);
         return "取消点赞成功";
     }
 
@@ -172,5 +189,18 @@ public class UserTreeholeController {
         userTreeholeService.deleteOneById(treeholeId);
 
         return "success";
+    }
+
+    /**
+     * 根据树洞id和用户id查询用户的点赞状态（1-点赞，0-未点赞）
+     * @param treeholeId
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getLikeStatus")
+    public int getUserLikeStatus(@RequestParam("treeholeId") int treeholeId,@RequestParam("userId") int userId) throws Exception{
+        int likeStatus = userTreeholeService.getLikeStatus(treeholeId, userId);
+        return likeStatus;
     }
 }

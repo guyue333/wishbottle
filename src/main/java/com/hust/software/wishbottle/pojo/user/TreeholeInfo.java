@@ -36,4 +36,7 @@ public class TreeholeInfo {   //树洞信息实体类，不对应数据库中的
 
     //树洞点赞数
     private Integer likedNumber;
+
+    //树洞评论数
+    private Integer replyNumber;
 }
