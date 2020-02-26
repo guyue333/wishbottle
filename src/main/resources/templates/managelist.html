@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理员管理 - 管理员列表</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"/>
+    <style>
+        a{color: white;}
+        a:hover{color: black;}
+    </style>
+</head>
+<body class="layui-layout-body" >
+<div class="layui-layout layui-layout-admin">
+    <div class="">
+        <!-- 内容主体区域 -->
+        <div style="padding: 20px;">
+            <fieldset class="layui-elem-field">
+                <legend>管理员管理 - 管理员列表</legend>
+                <div class="layui-field-box">
+                    <form class="layui-form" action="/manage/manageConditionList" method="post">
+                        <div class="layui-form-item" style="text-align:center;">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <select name="modules" lay-verify="required" class="changesearch" lay-filter="level">
+                                        <option value="">直接选择或搜索选择</option>
+                                        <option value="1">管理员id</option>
+                                        <option value="2">管理员用户名</option>
+                                        <option value="3">管理员类型</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input autocomplete="off" class="layui-input txtsearch" placeholder="请输入用户名关键字" type="text" name="keywordtxt">
+                                    <input autocomplete="off" class="layui-input numsearch" placeholder="请输入用户 id 数字" type="number" name="keywordnum">
+                                    <input autocomplete="off" class="layui-input num1search" placeholder="输入类型（0-普通，1-超级）" type="number" name="keywordnum1">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align:left;">
+                                <div class="layui-input-inline">
+                                    <button type="submit" class="layui-btn" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="layui-btn-group">
+                        <button class="layui-btn layui-btn-xs layui-btn-normal" data-method="onwrite" dw-url="/manage/manageAdd" dw-title="新增普通管理员" dw-height="50%">
+                            <i class="layui-icon">&#xe654;</i>新增
+                        </button>
+                        <button class="layui-btn layui-btn-xs layui-btn-danger" data-method="deletemore" dw-url="/manage/manageDeletemore">
+                            <i class="layui-icon">&#xe640;</i>删除
+                        </button>
+                        <button class="layui-btn layui-btn-xs">
+                            <a href="/manage/manageList"><i class="layui-icon">&#x1002;</i>刷新</a>
+                        </button>
+                    </div>
+                    <hr>
+                    <table class="layui-table" style="text-align:center;">
+                        <colgroup>
+                            <col width="50">
+                            <col width="100">
+                            <col width="150">
+                            <col width="150">
+                            <col width="150">
+                            <col width="300">
+                        </colgroup>
+                        <thead >
+                        <tr>
+                            <th class="selectAll" style="text-align:center;"><input type="checkbox" id="chooseall" lay-filter="yesChoose" lay-skin="primary"></th>
+                            <th style="text-align:center;">管理员id</th>
+                            <th style="text-align:center;">管理员用户名</th>
+                            <th style="text-align:center;">管理员密码</th>
+                            <th style="text-align:center;">管理员类型</th>
+                            <th style="text-align:center;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tbodyforchoose">
+                        <tr th:each="Manage,userStat:${manages}">
+                            <td><input type="checkbox" name="datas" th:value="${Manage.managerId}" lay-skin="primary"></td>
+                            <td th:text="${Manage.managerId}">1</td>
+                            <td th:text="${Manage.managerAccount}">cicc</td>
+                            <td th:text="${Manage.managerPassword}">cicc</td>
+                            <td th:text="${Manage.managerType}==0?'普通管理员':'超级管理员'">普通管理员</td>
+                            <td class="text-center">
+                                <div class="layui-btn-group">
+                                    <button class="layui-btn layui-btn-xs layui-btn-normal" data-method="onwrite" th:dw-url="@{/manage/manageUpdate/{id}(id=${Manage.managerId})}" dw-title="编辑管理员信息" dw-height="50%">
+                                        <!--<a th:href="@{'manageUpdate/'+${Manage.managerId}}"><i class="layui-icon">&#xe642;</i>编辑</a>-->
+                                        <!--<a th:href="@{/manage/manageUpdate/{id}(id=${Manage.managerId})}"><i class="layui-icon">&#xe642;</i>编辑</a>-->
+                                        <i class="layui-icon">&#xe642;</i>编辑
+                                    </button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-danger" data-method="deleteone" th:dw-url="@{/manage/manageDeleteone/{id}(id=${Manage.managerId})}" th:dw-title="${Manage.managerAccount}">
+                                        <i class="layui-icon">&#xe640;</i>删除
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/check.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</body>
+</html>

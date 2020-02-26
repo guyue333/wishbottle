@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>管理员管理 - 添加管理员</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<div class="layui-container" style="padding: 20px;padding-top: 70px;">
+    <div class="layui-row">
+        <div class="layui-col-lg12">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form" action="/manage/manageAddInfo" method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-block">
+                                <input th:if="${manage.managerId != 0}" type="text" name="managerAccount" required  lay-verify="managename" placeholder="请输入用户名" autocomplete="off" class="layui-input" th:value="${manage.managerAccount}">
+                                <input th:if="${manage.managerId == 0}" type="text" name="managerAccount" required  lay-verify="managename" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密  码</label>
+                            <div class="layui-input-block">
+                                <input th:if="${manage.managerId != 0}" type="text" name="managerPassword" required lay-verify="managepwd" placeholder="请输入密码" autocomplete="off" class="layui-input" th:value="${manage.managerPassword}">
+                                <input th:if="${manage.managerId == 0}" type="text" name="managerPassword" required lay-verify="managepwd" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                            </div>
+                        </div><br/>
+                        <div class="layui-input-line">
+                            <input type="hidden" name="managerId" required  placeholder="" autocomplete="off" class="layui-input" th:value="${manage.managerId}">
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                            <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</body>
+</html>

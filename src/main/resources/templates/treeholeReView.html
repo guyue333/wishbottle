@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>树洞管理 - 树洞详情</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<div class="layui-container" style="padding: 20px;padding-top: 70px;">
+    <div class="layui-row">
+        <div class="layui-col-lg12">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form" action="/treehole/treeholereportedDelete" method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">树洞id</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="treeholeId" disabled class="layui-input" th:value="${treeHole.treeholeId}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">树洞创建者</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="writerId" disabled class="layui-input" th:value="${treeHole.writerId}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="createTime" disabled class="layui-input" th:value="${#dates.format(treeHole.createTime,'yyyy-MM-dd HH:mm:ss')}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">树洞内容</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="treeholeContent" disabled class="layui-input" th:value="${treeHole.treeholeContent}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">树洞状态</label>
+                            <div class="layui-input-block">
+                                <input th:if="${treeHole.treeholeStatus == 0}" name="treeholeStatus" type="text" disabled class="layui-input" value="正常">
+                                <input th:if="${treeHole.treeholeStatus == 1}" name="treeholeStatus" type="text" disabled class="layui-input" value="被作者删除">
+                                <input th:if="${treeHole.treeholeStatus == 2}" name="treeholeStatus" type="text" disabled class="layui-input" value="被管理员删除">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">树洞点赞数</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="likedNumber" disabled class="layui-input" th:value="${treeHole.likedNumber}">
+                            </div>
+                        </div>
+                        <div class="layui-input-line">
+                            <input type="hidden" name="treeholereportedid" required  placeholder="" autocomplete="off" class="layui-input" th:value="${treeHole.treeholeId}">
+                        </div>
+                        <br/>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo" style="text-align: center;">确认删除</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</body>
+</html>

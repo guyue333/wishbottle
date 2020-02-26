@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>心愿管理 - 心愿详情</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+</head>
+<div class="layui-container" style="padding: 20px;padding-top: 70px;">
+    <div class="layui-row">
+        <div class="layui-col-lg12">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form" action="/wish/wishreportedDelete" method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">心愿id</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="wishId" disabled class="layui-input" th:value="${wishView.wishId}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">心愿创建者</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="writerName" disabled class="layui-input" th:value="${wishView.writerName}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">标签</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="tagMeaning" disabled class="layui-input" th:value="${wishView.tagMeaning }">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="createTime" disabled class="layui-input" th:value="${#dates.format(wishView.createTime,'yyyy-MM-dd')}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">心愿内容</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="wishContent" disabled class="layui-input" th:value="${wishView.wishContent}">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">心愿状态</label>
+                            <div class="layui-input-block">
+                                <input th:if="${wishView.wishStatus == 0}" name="wishStatus" type="text" disabled class="layui-input" value="正常">
+                                <input th:if="${wishView.wishStatus == 1}" name="wishStatus" type="text" disabled class="layui-input" value="被捞取">
+                                <input th:if="${wishView.wishStatus == 2}" name="wishStatus" type="text" disabled class="layui-input" value="被作者删除">
+                                <input th:if="${wishView.wishStatus == 3}" name="wishStatus" type="text" disabled class="layui-input" value="被拾取者扔掉">
+                                <input th:if="${wishView.wishStatus == 4}" name="wishStatus" type="text" disabled class="layui-input" value="被管理员删除">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">心愿拾取者</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="pickerName" disabled class="layui-input" th:value="${wishView.pickerName}">
+                            </div>
+                        </div>
+                        <div class="layui-input-line">
+                            <input type="hidden" name="wishreportedid" required  placeholder="" autocomplete="off" class="layui-input" th:value="${wishView.wishId}">
+                        </div>
+                        <br/>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo" style="text-align: center;">确认删除</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户图表</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script type="text/javascript" src="/js/echarts.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+</head>
+<body>
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title">
+        <li class="layui-this" id="sexbtn">用户性别</li>
+        <li id="provincebtn">所在省份</li>
+        <li id="agebtn">用户年龄</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show" id="sexchart" style="position:absolute;top:150px;left:200px;width:600px; height: 400px;"></div>
+        <div class="layui-tab-item" id="provincechart" style="position:absolute;top:150px;left:200px;width:600px; height: 400px;"></div>
+        <div class="layui-tab-item" id="agechart" style="position:absolute;top:150px;left:200px;width:600px; height: 400px;"></div>
+    </div>
+</div>
+    <script type="text/javascript" src="/js/usercharts.js"></script>
+    <script>
+        //用户在第一次点击时加载数据
+            //异步加载数据
+            $.ajax({
+                async: false,
+                url: "/user/userchartTest",
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    myChart.hideLoading();  // 隐藏 loading 效果
+                    // 填入数据
+                    eval(data);
+                    var boy = 0;
+                    var girl = 0;
+                    for(var i = 0;i < data.length;i++){
+                        if (data[i].userGender == 0){
+                            girl++;
+                        }else {
+                            boy++;
+                        }
+                    }
+                    myChart.setOption({
+                        series: [{
+                            name: ['男'],
+                            type: 'bar',
+                            data: [boy]
+                        },{
+                            name: ['女'],
+                            type: 'bar',
+                            data: [girl]
+                        }]
+                    });
+                }
+            });
+    </script>
+</body>
+</html>

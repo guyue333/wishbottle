@@ -1,6 +1,6 @@
 package com.hust.software.wishbottle.exception;
 
-import com.hust.software.wishbottle.pojo.Excep;
+import com.hust.software.wishbottle.pojo.user.Excep;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

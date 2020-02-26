@@ -1,7 +1,7 @@
 package com.hust.software.wishbottle;
 
-import com.hust.software.wishbottle.mapper.UserMapper;
-import com.hust.software.wishbottle.pojo.User;
+import com.hust.software.wishbottle.mapper.user.UserUserMapper;
+import com.hust.software.wishbottle.pojo.user.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,11 +12,11 @@ import java.util.List;
 class WishbottleApplicationTests {
 
     @Autowired
-    UserMapper userMapper;
+    UserUserMapper userUserMapper;
 
     @Test
     void contextLoads() {
-        List<User> us = userMapper.findAll();
+        List<User> us = userUserMapper.findAll();
         for (User u : us) {
             System.out.println(u.toString());
         }

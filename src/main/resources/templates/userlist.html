@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>用户管理 - 用户列表</title>
+  <link rel="stylesheet" href="/layui/css/layui.css"/>
+    <style>
+        a{color: white;}
+        a:hover{color: black;}
+    </style>
+</head>
+<body class="layui-layout-body" >
+<div class="layui-layout layui-layout-admin">
+  <div class="">
+    <!-- 内容主体区域 -->
+    <div style="padding: 20px;">
+        <fieldset class="layui-elem-field">
+            <legend>用户管理 - 用户列表</legend>
+            <div class="layui-field-box">
+              <form class="layui-form" action="/user/userConditionList" method="post">
+                <div class="layui-form-item" style="text-align:center;">
+                  <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <select name="modules" lay-verify="required" class="changesearch" lay-filter="userlevel">
+                            <option value="">直接选择或搜索选择</option>
+                            <option value="1">用户id</option>
+                            <option value="2">用户名</option>
+                            <option value="3">用户年龄</option>
+                            <option value="4">用户性别</option>
+                            <option value="5">用户所在省份</option>
+                        </select>
+                    </div>
+                  </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input autocomplete="off" class="layui-input usertxt" placeholder="请输入关键字" type="text" name="usertxt">
+                            <input autocomplete="off" class="layui-input usernum" placeholder="请输入数字" type="number" name="usernum">
+                            <input autocomplete="off" class="layui-input usersex" placeholder="输入性别（0-女，1-男）" type="number" name="usersex">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="text-align:left;">
+                        <div class="layui-input-inline">
+                            <button type="submit" class="layui-btn" lay-submit><i class="layui-icon">&#xe615;</i>查询</button>
+                        </div>
+                    </div>
+                </div>
+              </form>
+              <hr>
+              <div class="layui-btn-group">
+                  <button class="layui-btn layui-btn-xs">
+                      <a href="/user/userList"><i class="layui-icon">&#x1002;</i>刷新</a>
+                  </button>
+              </div>
+              <hr>
+              <table class="layui-table" style="text-align:center;">
+                  <colgroup>
+                      <col width="50">
+                      <col width="100">
+                      <col width="150">
+                      <col width="150">
+                      <col width="150">
+                      <col width="200">
+                      <col width="200">
+                      <col width="200">
+                      <col width="200">
+                  </colgroup>
+                  <thead >
+                      <tr>
+                      <th class="selectAll" style="text-align:center;"><input type="checkbox" id="chooseall"></th>
+                      <th style="text-align:center;">用户id</th>
+                      <th style="text-align:center;">用户名</th>
+                      <th style="text-align:center;">用户年龄</th>
+                      <th style="text-align:center;">用户性别</th>
+                      <th style="text-align:center;">头像地址</th>
+                      <th style="text-align:center;">省份</th>
+                      <th style="text-align:center;">城市</th>
+                      <th style="text-align:center;">生日</th>
+                      </tr> 
+                  </thead>
+                  <tbody>
+                      <tr th:each="user,userStat:${users}">
+                      <td><input type="checkbox" name="datas" th:value="${user.userId}" lay-skin="primary"></td>
+                      <td th:text="${user.userId}">1</td>
+                      <td th:text="${user.userName}">cicc</td>
+                      <td th:text="${user.userAge}">22</td>
+                      <td th:text="${user.userGender}==0?'女':'男'">男</td>
+                      <td th:text="${user.userAvatar}">local host</td>
+                      <td th:text="${user.userProvince}">湖北省</td>
+                      <td th:text="${user.userCity}">武汉市</td>
+                      <td th:text="${#dates.format(user.userBirthday,'yyyy-MM-dd')}">1996.3.3</td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        </fieldset>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/check.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</body>
+</html>

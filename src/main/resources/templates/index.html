@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>心愿瓶后台管理系统</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">心愿瓶后台管理系统</div>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;" th:text="${verify.managerAccount}">admin</a>
+        <dl class="layui-nav-child">
+          <dd><a href="/manage/manageOut">安全退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item"><a class="layui-this" href="/white.html" target="main_choice">控制台</a></li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">用户管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="/user/userList" target="main_choice">用户信息列表</a></dd>
+            <dd><a href="/user/userchartturn" target="main_choice">用户图表列表</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item" th:if="${verify.managerType == 1}">
+            <a href="javascript:;">管理员管理</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/manage/manageList" target="main_choice">管理员信息列表</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">心愿管理</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/wish/wishList" target="main_choice">心愿信息列表</a></dd>
+                <dd><a href="/wish/wishReportList" target="main_choice">举报心愿列表</a></dd>
+                <dd><a href="/wish/wishchartturn" target="main_choice">心愿图表列表</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">树洞管理</a>
+            <dl class="layui-nav-child">
+                <dd><a href="/treehole/treeholeList" target="main_choice">树洞信息列表</a></dd>
+                <dd><a href="/treehole/treeHoleReportList" target="main_choice">举报树洞列表</a></dd>
+            </dl>
+        </li>
+        <!--<li class="layui-nav-item">
+            <a href="javascript:;">其他管理</a>
+            <dl class="layui-nav-child">
+                <dd><a href="#" target="main_choice">权限管理</a></dd>
+                <dd><a href="#" target="main_choice">安全设置</a></dd>
+            </dl>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <iframe src="/white.html"  name="main_choice" scrolling="yes" frameborder="0" width="100%" height="100%"></iframe>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © 30小组所有
+  </div>
+</div>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</body>
+</html>
