@@ -1,5 +1,6 @@
 package com.hust.software.wishbottle.controller.manage;
 
+import com.github.pagehelper.PageInfo;
 import com.hust.software.wishbottle.pojo.user.User;
 import com.hust.software.wishbottle.service.manager.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,42 +17,35 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //查询所有用户信息
-    @RequestMapping("userList")
-    public String userList(Model model){
-        List<User> users = userService.selectAll();
-
-        model.addAttribute("users",users);
-        return "userlist";
-    }
     //按条件查询
-    //管理员条件查询
-    @PostMapping("userConditionList")
-    public String userConditionList(@RequestParam("modules") String modules,
-                                      @RequestParam("usertxt") String usertxt,
-                                      @RequestParam("usernum") String usernum,
-                                      @RequestParam("usersex") String usersex,
+    @RequestMapping("userConditionList")
+    public String userConditionList(@RequestParam(value="pageIndex",defaultValue="1") Integer pageIndex,
+                                    @RequestParam(value="pageSize",defaultValue="9") Integer pageSize,
+                                    @RequestParam(value="modules",defaultValue="0") String modules,
+                                      @RequestParam(value="usertxt",defaultValue="") String usertxt,
+                                      @RequestParam(value="usernum",defaultValue="0") String usernum,
+                                      @RequestParam(value="usersex",defaultValue="0") String usersex,
                                       Model model){
         int value = Integer.valueOf(modules);
-        List<User> users = userService.selectAll();
-        if(usernum != "" && (value == 1 || value == 3)){//id,age
-            int keynum = Integer.valueOf(usernum);
+        int keynum = Integer.valueOf(usernum);
+        int keynum1 = Integer.valueOf(usersex);
+        PageInfo<User> users = userService.selectPage(pageIndex,pageSize);//无条件
+        if(keynum != 0 && (value == 1 || value == 3)){//id,age
             if(value == 1){
-                users = userService.selectByID(keynum);
+                users = userService.selectByID(pageIndex,pageSize,keynum);
             }else {
-                users = userService.selectByAge(keynum);
+                users = userService.selectByAge(pageIndex,pageSize,keynum);
             }
         }else if (usertxt != "" && (value == 2 || value == 5)){//用户名,省份
             if(value== 2){
-                users = userService.selectByName(usertxt);
+                users = userService.selectByName(pageIndex,pageSize,usertxt);
             }else {
-                users = userService.selectByProvince(usertxt);
+                users = userService.selectByProvince(pageIndex,pageSize,usertxt);
             }
-        }else if (usersex != "" && value == 4){
-            int keynum1 = Integer.valueOf(usersex);
-            users = userService.selectByGender(keynum1);
+        }else if (keynum1 != 0 && value == 4){
+            users = userService.selectByGender(pageIndex,pageSize,keynum1);
         }
-        model.addAttribute("users",users);
+        model.addAttribute("info",users);
         return "userlist";
     }
 
@@ -95,4 +89,5 @@ public class UserController {
         }
         return maps;
     }
+
 }

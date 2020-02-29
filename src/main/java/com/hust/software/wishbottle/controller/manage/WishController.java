@@ -1,5 +1,6 @@
 package com.hust.software.wishbottle.controller.manage;
 
+import com.github.pagehelper.PageInfo;
 import com.hust.software.wishbottle.pojo.manage.WishView;
 import com.hust.software.wishbottle.pojo.user.Wish;
 import com.hust.software.wishbottle.pojo.user.WishReport;
@@ -21,30 +22,11 @@ public class WishController {
     @Autowired
     private UserService userService;
 
-    //查询所有心愿
-    @RequestMapping("wishList")
-    public String wishList(Model model){
-        List<Wish> wishes = wishService.selectAll();
-        List<WishView> wishViews = new ArrayList<>();
-        for (int i=0;i<wishes.size();i++){
-            WishView wishView = new WishView();
-            wishView.setWishId(wishes.get(i).getWishId());
-            wishView.setWriterName(userService.selestOneByID(wishes.get(i).getWriterId()).getUserName());
-            wishView.setTagMeaning(wishService.selectTagByID(wishes.get(i).getTagId()).getTagMeaning());
-            wishView.setCreateTime(wishes.get(i).getCreateTime());
-            wishView.setWishContent(wishes.get(i).getWishContent());
-            wishView.setWishStatus(wishes.get(i).getWishStatus());
-            wishView.setPickerName(userService.selestOneByID(wishes.get(i).getPickerId()).getUserName());
-            wishViews.add(wishView);
-        }
-        model.addAttribute("wishViews",wishViews);
-        return "wishlist";
-    }
     //单条删除心愿
     @GetMapping("wishDeleteone/{id}")
     public String wishDeleteone(@PathVariable("id") int wish_id){
         wishService.deleteWish(wish_id);
-        return "redirect:/wish/wishList";
+        return "redirect:/wish/wishConditionList";
     }
     //批量删除心愿
     @PostMapping("wishDeletemore")
@@ -57,55 +39,51 @@ public class WishController {
             id = Integer.valueOf(st.nextToken());
             wishService.deleteWish(id);
         }
-        return "redirect:/wish/wishList";
+        return "redirect:/wish/wishConditionList";
     }
     //按条件查询心愿的相关信息
-    @PostMapping("wishConditionList")
-    public String wishConditionList(@RequestParam("modules") String modules,
-                                      @RequestParam("keywordtxt") String keywordtxt,
-                                      @RequestParam("keywordnum") String keywordnum,
-                                      @RequestParam("keywordnum1") String keywordnum1,
+    @RequestMapping("wishConditionList")
+    public String wishConditionList(@RequestParam(value="pageIndex",defaultValue="1") Integer pageIndex,
+                                    @RequestParam(value="pageSize",defaultValue="9") Integer pageSize,
+                                    @RequestParam(value="modules",defaultValue="0") String modules,
+                                      @RequestParam(value="keywordtxt",defaultValue="") String keywordtxt,
+                                      @RequestParam(value="keywordnum",defaultValue="0") String keywordnum,
+                                      @RequestParam(value="keywordnum1",defaultValue="-1") String keywordnum1,
                                       Model model){
         int value = Integer.valueOf(modules);
-        List<Wish> wishes = wishService.selectAll();
-        if (keywordnum != "" && value == 1){//id
-            int keynum = Integer.valueOf(keywordnum);
-            wishes = wishService.selectAllByID(keynum);
+        int keynum = Integer.valueOf(keywordnum);
+        int keynum1 = Integer.valueOf(keywordnum1);
+        PageInfo<Wish> wishes = wishService.selectAll(pageIndex,pageSize);//无条件
+        if (keynum != 0 && value == 1){//id
+            wishes = wishService.selectAllByID(pageIndex,pageSize,keynum);
         }else if (keywordtxt != "" && value == 2){//内容
-            wishes = wishService.selectAllByContent(keywordtxt);
-        }else if (keywordnum1 != "" && value == 3){
-            int keynum1 = Integer.valueOf(keywordnum1);//状态
-            wishes = wishService.selectAllByStatus(keynum1);
+            wishes = wishService.selectAllByContent(pageIndex,pageSize,keywordtxt);
+        }else if (keynum1 != -1 && value == 3){//状态
+            wishes = wishService.selectAllByStatus(pageIndex,pageSize,keynum1);
         }
         List<WishView> wishViews = new ArrayList<>();
-        for (int i=0;i<wishes.size();i++){
+        for (int i=0;i<wishes.getList().size();i++){
             WishView wishView = new WishView();
-            wishView.setWishId(wishes.get(i).getWishId());
-            wishView.setWriterName(userService.selestOneByID(wishes.get(i).getWriterId()).getUserName());
-            wishView.setTagMeaning(wishService.selectTagByID(wishes.get(i).getTagId()).getTagMeaning());
-            wishView.setCreateTime(wishes.get(i).getCreateTime());
-            wishView.setWishContent(wishes.get(i).getWishContent());
-            wishView.setWishStatus(wishes.get(i).getWishStatus());
-            wishView.setPickerName(userService.selestOneByID(wishes.get(i).getPickerId()).getUserName());
+            wishView.setWishId(wishes.getList().get(i).getWishId());
+            wishView.setWriterName(userService.selestOneByID(wishes.getList().get(i).getWriterId()).getUserName());
+            wishView.setTagMeaning(wishService.selectTagByID(wishes.getList().get(i).getTagId()).getTagMeaning());
+            wishView.setCreateTime(wishes.getList().get(i).getCreateTime());
+            wishView.setWishContent(wishes.getList().get(i).getWishContent());
+            wishView.setWishStatus(wishes.getList().get(i).getWishStatus());
+            wishView.setPickerName(userService.selestOneByID(wishes.getList().get(i).getPickerId()).getUserName());
             wishViews.add(wishView);
         }
         model.addAttribute("wishViews",wishViews);
+        model.addAttribute("info",wishes);
         return "wishlist";
     }
 
     //---------------------------------
-    //查询所有举报信息
-    @RequestMapping("wishReportList")
-    public String wishReportList(Model model){
-        List<WishReport> wishReports = wishService.selectReportAll();
-        model.addAttribute("wishReports",wishReports);
-        return "wishreportlist";
-    }
     //单条删除心愿举报信息
     @GetMapping("wishReportDeleteone/{id}")
     public String wishReportDeleteone(@PathVariable("id") int report_id){
         wishService.deleteReportWish(report_id);
-        return "redirect:/wish/wishReportList";
+        return "redirect:/wish/wishReportConditionList";
     }
     //批量删除心愿举报信息
     @PostMapping("wishReportDeletemore")
@@ -118,7 +96,7 @@ public class WishController {
             id = Integer.valueOf(st.nextToken());
             wishService.deleteReportWish(id);
         }
-        return "redirect:/wish/wishReportList";
+        return "redirect:/wish/wishReportConditionList";
     }
     //查看被举报心愿详，可执行删除操作或者忽略
     @GetMapping("wishReportView/{id}")
@@ -144,18 +122,20 @@ public class WishController {
         return "message";
     }
     //条件查询
-    @PostMapping("wishReportConditionList")
-    public String wishReportConditionList(@RequestParam("modules") String modules,
-                                    @RequestParam("keywordtxt") String keywordtxt,
-                                    @RequestParam("keywordnum") String keywordnum,
-                                    Model model){
+    @RequestMapping("wishReportConditionList")
+    public String wishReportConditionList(@RequestParam(value="pageIndex",defaultValue="1") Integer pageIndex,
+                                          @RequestParam(value="pageSize",defaultValue="9") Integer pageSize,
+                                          @RequestParam(value="modules",defaultValue="0") String modules,
+                                          @RequestParam(value="keywordtxt",defaultValue="") String keywordtxt,
+                                          @RequestParam(value="keywordnum",defaultValue="0") String keywordnum,
+                                          Model model){
         int value = Integer.valueOf(modules);
-        List<WishReport> wishReports = wishService.selectReportAll();
-        if (keywordnum != "" && value == 1){//id
-            int keynum = Integer.valueOf(keywordnum);
-            wishReports = wishService.selectReportByID(keynum);
+        int keynum = Integer.valueOf(keywordnum);
+        PageInfo<WishReport> wishReports = wishService.selectReportAll(pageIndex,pageSize);
+        if (keynum != 0 && value == 1){//id
+            wishReports = wishService.selectReportByID(pageIndex,pageSize,keynum);
         }else if (keywordtxt != "" && value == 2){//内容
-            wishReports = wishService.selectReportByReason(keywordtxt);
+            wishReports = wishService.selectReportByReason(pageIndex,pageSize,keywordtxt);
         }
         model.addAttribute("wishReports",wishReports);
         return "wishreportlist";

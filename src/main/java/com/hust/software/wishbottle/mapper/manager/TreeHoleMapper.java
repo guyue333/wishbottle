@@ -1,6 +1,5 @@
 package com.hust.software.wishbottle.mapper.manager;
 
-
 import com.hust.software.wishbottle.pojo.user.TreeHole;
 import com.hust.software.wishbottle.pojo.user.TreeHoleReport;
 import org.apache.ibatis.annotations.*;

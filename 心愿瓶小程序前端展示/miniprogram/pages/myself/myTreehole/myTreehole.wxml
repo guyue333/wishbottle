@@ -1,0 +1,47 @@
+<!--miniprogram/pages/myTreehole/myTreehole.wxml-->
+<!-- 当用户没有发布过心愿时，给出提示信息 -->
+<view wx:if="{{!havePublish}}" class="text-center padding"> 
+  <text class="text-grey">您还没有写过树洞，快去尝试一下吧</text>
+</view>
+
+<!-- 心愿列表 -->
+<view class="cu-card article">
+  <view wx:for="{{treeholeInfo}}" wx:for-item="treeholeInfo" wx:key class="cu-item shadow" bindtap="toDetail" data-treeholeid="{{treeholeInfo.treeholeId}}" data-target="bottomModal" bindlongpress="showModal">
+    <view class="flex padding-top padding-left padding-right">
+      <view class="flex justify-center padding-right">
+        <!-- 头像框 -->
+        <view class="cu-avatar lg round" style="background-image:url({{treeholeInfo.userAvatar}});"></view>
+      </view>
+      <view>
+        <view class="flex justify-start">
+          <!-- 用户昵称 -->
+          <view class="text-sm text-gray light margin-right">{{treeholeInfo.userName}}</view>
+          <!-- 时间 -->
+          <view class="text-sm text-gray light margin-left">{{treeholeInfo.createTime}}</view>
+        </view>
+        <!-- 树洞内容 -->
+        <view class='wishText text-content'> {{treeholeInfo.treeholeContent}}</view>
+        <!-- 标签 -->
+        <view >
+          <text class="icon-appreciate lg"></text>
+          <text class="text-sm" style="padding-left:5px;">{{treeholeInfo.likedNumber}}</text>
+          <text class="icon-comment " style="padding-left:5px;"></text>
+          <text class="text-sm" style="padding-left:5px;">0</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 长按提示用户是否删除树洞 -->
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class='action text-green' bindtap="deleteTreehole">确定</view>
+      <view class='action text-blue' bindtap='hideModal'>取消</view>
+    </view>
+    <view class='padding-xl'>
+      <text>你确定要删除这条树洞吗</text>
+    </view>
+  </view>
+</view>

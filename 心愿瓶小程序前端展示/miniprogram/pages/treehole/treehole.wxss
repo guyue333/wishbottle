@@ -1,0 +1,50 @@
+/* miniprogram/pages/treehole/treehole.wxss */
+page{
+  /* 控制背景图片等比例缩放 */
+  background: url(https://6465-dev-hmgna-1300940634.tcb.qcloud.la/15271445357138304.jpg?sign=dbbaf8d6c000a61f59c470ccf4bbe2c8&t=1578450663) fixed center center no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+ 
+/* first样式开始 */
+.first{
+  margin-top: 20px;
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+}
+/* first样式结束 */
+
+/* second开始 */
+.second{
+  /* background-color: #6E0E93; */
+  transform: rotate(6deg);
+  z-index: 0;
+}
+/* second结束 */
+
+/* third样式开始 */
+.third{
+		margin-top: 6px;
+		/* margin-left: 50px; */
+		display: inline-block;
+		/* position: absolute; */
+		width: 50px;
+		height: 20px;
+		/* background-color: #CFA0DF; */
+		opacity: 0.6;
+		transform: rotate(-3deg);
+    z-index: 2;
+	}
+  /* third样式结束 */
+
+  /* 树洞文字样式开始 */
+  .treeholeText{ 
+    margin: 10px;
+    display: -webkit-box;    /* 设置为弹性盒子 */
+    -webkit-line-clamp:3;   /* 最多显示6行 */
+    overflow: hidden;       /* 超出隐藏 */
+    text-overflow: ellipsis;     /* 超出显示为省略号 */
+    -webkit-box-orient: vertical;    
+    word-break: break-word;       /* 强制英文单词自动换行 */
+  }

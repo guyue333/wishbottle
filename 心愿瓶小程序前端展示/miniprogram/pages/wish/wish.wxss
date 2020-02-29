@@ -1,0 +1,49 @@
+/* miniprogram/pages/wish/wish.wxss */
+/* 心愿内容的样式开始 */
+.wishText{ 
+    margin: 10px;
+    display: -webkit-box;    /* 设置为弹性盒子 */
+    -webkit-line-clamp:1;   /* 最多显示行 */
+    overflow: hidden;       /* 超出隐藏 */
+    text-overflow: ellipsis;     /* 超出显示为省略号 */
+    -webkit-box-orient: vertical;    
+    word-break: break-word;       /* 强制英文单词自动换行 */
+  }
+/* 心愿内容的样式结束 */
+
+/* 挖心愿的动画效果开始 */
+#pic{
+			transform: rotate(-20deg);
+			-webkit-transform: rotate(-20deg); /* Safari and Chrome */
+			position:relative;
+			animation-name:myfirst;
+			animation-duration:1.2s;
+			animation-timing-function: linear;
+			animation-iteration-count:3;
+			animation-direction:alternate;
+			/* Safari and Chrome: */
+			-webkit-animation-name:myfirst;
+			-webkit-animation-duration:1.2s;
+			animation-timing-function: linear;
+			-webkit-animation-iteration-count:3;
+			-webkit-animation-direction:alternate;
+		}
+		@keyframes myfirst
+		{
+			0%   {left:0px; top:0px;}
+			50%  {left:-40px; top:20px;}
+			100% {left:0px; top:0px;}
+		}
+	
+		@-webkit-keyframes myfirst /* Safari and Chrome */
+		{
+			0%   {left:0px; top:0px;}
+			50%  {left:-40px; top:20px;}
+			100% {left:0px; top:0px;}
+		}
+/* 挖心愿的动画效果结束 */
+
+
+
+
+

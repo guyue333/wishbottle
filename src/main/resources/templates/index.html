@@ -29,38 +29,31 @@
         <li class="layui-nav-item">
           <a href="javascript:;">用户管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="/user/userList" target="main_choice">用户信息列表</a></dd>
-            <dd><a href="/user/userchartturn" target="main_choice">用户图表列表</a></dd>
+              <dd><a href="/user/userConditionList" target="main_choice">用户信息列表</a></dd>
+              <dd><a href="/user/userchartturn" target="main_choice">用户图表列表</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item" th:if="${verify.managerType == 1}">
             <a href="javascript:;">管理员管理</a>
             <dl class="layui-nav-child">
-                <dd><a href="/manage/manageList" target="main_choice">管理员信息列表</a></dd>
+                <dd><a href="/manage/manageConditionList" target="main_choice">管理员信息列表</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item">
             <a href="javascript:;">心愿管理</a>
             <dl class="layui-nav-child">
-                <dd><a href="/wish/wishList" target="main_choice">心愿信息列表</a></dd>
-                <dd><a href="/wish/wishReportList" target="main_choice">举报心愿列表</a></dd>
+                <dd><a href="/wish/wishConditionList" target="main_choice">心愿信息列表</a></dd>
+                <dd><a href="/wish/wishReportConditionList" target="main_choice">举报心愿列表</a></dd>
                 <dd><a href="/wish/wishchartturn" target="main_choice">心愿图表列表</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item">
             <a href="javascript:;">树洞管理</a>
             <dl class="layui-nav-child">
-                <dd><a href="/treehole/treeholeList" target="main_choice">树洞信息列表</a></dd>
-                <dd><a href="/treehole/treeHoleReportList" target="main_choice">举报树洞列表</a></dd>
+                <dd><a href="/treehole/treeholeConditionList" target="main_choice">树洞信息列表</a></dd>
+                <dd><a href="/treehole/treeholeReportConditionList" target="main_choice">举报树洞列表</a></dd>
             </dl>
         </li>
-        <!--<li class="layui-nav-item">
-            <a href="javascript:;">其他管理</a>
-            <dl class="layui-nav-child">
-                <dd><a href="#" target="main_choice">权限管理</a></dd>
-                <dd><a href="#" target="main_choice">安全设置</a></dd>
-            </dl>
-        </li>-->
       </ul>
     </div>
   </div>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>心愿管理 - 心愿信息列表</title>
     <link rel="stylesheet" href="/layui/css/layui.css"/>
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <style>
         a{color: white;}
         a:hover{color: black;}
@@ -16,7 +17,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 20px;">
             <fieldset class="layui-elem-field">
-                <legend>心愿管理 - 心愿信息列表</legend>
+                <h3 style="margin-left:20px;">心愿管理 - 心愿信息列表</h3>
                 <div class="layui-field-box">
                     <form class="layui-form" action="/wish/wishConditionList" method="post">
                         <div class="layui-form-item" style="text-align:center;">
@@ -50,7 +51,7 @@
                             <i class="layui-icon">&#xe640;</i>删除
                         </button>
                         <button class="layui-btn layui-btn-xs">
-                            <a href="/wish/wishList"><i class="layui-icon">&#x1002;</i>刷新</a>
+                            <a href="/wish/wishConditionList"><i class="layui-icon">&#x1002;</i>刷新</a>
                         </button>
                     </div>
                     <hr>
@@ -103,6 +104,26 @@
                         </tr>
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a th:href="@{/wish/wishConditionList(pageIndex=${info.pageNum-1},pageSize=9)}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <th:block th:each="nav : ${info.navigatepageNums}">
+                                <li th:class="${nav==info.pageNum}?'active':''">
+                                    <a th:href="@{/wish/wishConditionList(pageIndex=${nav},pageSize=9)}"
+                                       th:text="${nav}"></a>
+                                </li>
+                            </th:block>
+                            <li>
+                                <a th:href="@{/wish/wishConditionList(pageIndex=${info.pageNum+1},pageSize=9)}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </fieldset>
         </div>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>用户管理 - 用户列表</title>
   <link rel="stylesheet" href="/layui/css/layui.css"/>
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <style>
         a{color: white;}
         a:hover{color: black;}
@@ -16,7 +17,7 @@
     <!-- 内容主体区域 -->
     <div style="padding: 20px;">
         <fieldset class="layui-elem-field">
-            <legend>用户管理 - 用户列表</legend>
+            <h3 style="margin-left:20px;">用户管理 - 用户列表</h3>
             <div class="layui-field-box">
               <form class="layui-form" action="/user/userConditionList" method="post">
                 <div class="layui-form-item" style="text-align:center;">
@@ -49,7 +50,7 @@
               <hr>
               <div class="layui-btn-group">
                   <button class="layui-btn layui-btn-xs">
-                      <a href="/user/userList"><i class="layui-icon">&#x1002;</i>刷新</a>
+                      <a href="/user/userConditionList"><i class="layui-icon">&#x1002;</i>刷新</a>
                   </button>
               </div>
               <hr>
@@ -79,7 +80,7 @@
                       </tr> 
                   </thead>
                   <tbody>
-                      <tr th:each="user,userStat:${users}">
+                      <tr th:each="user,userStat:${info.list}">
                       <td><input type="checkbox" name="datas" th:value="${user.userId}" lay-skin="primary"></td>
                       <td th:text="${user.userId}">1</td>
                       <td th:text="${user.userName}">cicc</td>
@@ -92,6 +93,26 @@
                       </tr>
                   </tbody>
               </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="@{/user/userConditionList(pageIndex=${info.pageNum-1},pageSize=9)}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <th:block th:each="nav : ${info.navigatepageNums}">
+                            <li th:class="${nav==info.pageNum}?'active':''">
+                                <a th:href="@{/user/userConditionList(pageIndex=${nav},pageSize=9)}"
+                                   th:text="${nav}"></a>
+                            </li>
+                        </th:block>
+                        <li>
+                            <a th:href="@{/user/userConditionList(pageIndex=${info.pageNum+1},pageSize=9)}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </fieldset>
     </div>

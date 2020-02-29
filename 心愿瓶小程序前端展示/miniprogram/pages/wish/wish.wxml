@@ -1,0 +1,69 @@
+<!-- 轮播图 -->
+<swiper class="card-swiper" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff">
+  <swiper-item wx:for="{{4}}" wx:key class="{{cardCur==index?'cur':''}}">
+    <view class='bg-img shadow-blur' style="background-image:url(https://image.weilanwl.com/img/4x3-{{index+1}}.jpg)"></view>
+  </swiper-item>
+</swiper>
+ 
+<view wx:if="{{!havePick}}" class="text-center padding"> 
+  <text class="text-grey">您还没有捞过心愿，点击下方捞心愿尝试一下吧</text>
+</view>
+ 
+<!-- 心愿列表 -->
+<view class="cu-card article">
+  <view wx:for="{{wishInfo}}" wx:for-item="wishInfo" wx:key class="cu-item shadow" data-wishid="{{wishInfo.wishId}}" bindtap="toWishDetail" data-target="bottomModal" bindlongpress="showModal">
+    <view class="flex padding-top padding-left padding-right">
+      <view class="flex justify-center padding-right">
+        <!-- 头像框 -->
+        <view class="cu-avatar lg round" style="background-image:url({{wishInfo.userAvatar}});"></view>
+      </view>
+      <view>
+        <view class="flex justify-start">
+          <!-- 用户昵称 -->
+          <view class="text-sm text-gray light margin-right">{{wishInfo.userName}}</view>
+          <!-- 时间 -->
+          <view class="text-sm text-gray light margin-left">{{wishInfo.createTime}}</view>
+        </view>
+        <!-- 心愿内容 -->
+        <view class='wishText text-content'> {{wishInfo.wishContent}}</view>
+        <!-- 标签 --> 
+        <view>
+          <view class='cu-tag bg-{{ColorList[index].name}} light sm round'>{{wishInfo.tagMeaning}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+ <!-- 捞心愿按钮 -->
+<view style="opacity: 0.5;position: fixed;bottom: 15px;right:15px;z-index: 3;">
+  <button class="cu-btn bg-orange round" role="button" style="width:100px;" data-target="showBg" bindtap="digWish">
+    <text class="icon-add text-white text-sm">捞心愿</text>
+  </button>
+</view>
+ 
+ <!-- 写心愿按钮 --> 
+<view style="opacity: 0.5;position: fixed;bottom: 100px;right:15px;z-index: 3;">
+  <button class="cu-btn bg-orange round" role="button" style="width:100px;" bindtap="writeWish">
+    <text class="icon-add text-white text-sm">写心愿</text>
+  </button>
+</view>
+
+<!-- 长按提示用户是否删除心愿 -->
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class='action text-green' bindtap="deleteWish">确定</view>
+      <view class='action text-blue' bindtap='hideModal'>取消</view>
+    </view>
+    <view class='padding-xl'>
+      <text>你确定要删除这条心愿吗</text>
+    </view>
+  </view>
+</view>
+
+<!-- 捞瓶子的动画效果 -->
+<!-- <cover-view style="background:rgba(0,0,0,0.2);position:fixed;left:0;top:0;width:100%;height:{{screenHeight}}px;display: {{bgType == 'showBg'?'flex':'none'}};justify-content:center;align-items: center;text-align:center;" catchtouchmove="catchtouchmove">
+    <cover-image src="https://6465-dev-hmgna-1300940634.tcb.qcloud.la/img.png?sign=6ec7ceda7b5d138ad8b74d2586062bfa&t=1582363445" id="pic" style="width:100px;height:70px;display:{{showTool}}"></cover-image>
+    <cover-image src="https://6465-dev-hmgna-1300940634.tcb.qcloud.la/img2.png?sign=e88c1d0ca6edd0eb70cd52b2a34d9f31&t=1582365589" id="tip" style="height:450px;display:inline-block;margin-bottom:100px;"></cover-image>
+</cover-view> -->

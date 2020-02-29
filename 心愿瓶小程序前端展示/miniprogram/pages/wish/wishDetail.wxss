@@ -1,0 +1,27 @@
+/* 留言输入框的全局样式 */
+.message-all{
+  position: fixed;     /* 固定在视图窗口上 */
+  bottom: 5px;
+  display: flex;
+  align-items: center;   /* 交叉轴上居中显示 */
+  margin: 30rpx;
+  height: 40px;
+}
+
+/* 输入框样式 */
+.message-input{
+  background-color: rgb(237, 237, 237);
+  border-radius: 20px;
+}
+
+/* 发送按钮样式 */
+.message-but{
+  width:50px;
+  height: 40px;
+  background-color: rgb(255, 79, 100);
+  color: #fff;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,5 +1,6 @@
 package com.hust.software.wishbottle.mapper.manager;
 
+
 import com.hust.software.wishbottle.pojo.user.Tag;
 import com.hust.software.wishbottle.pojo.user.Wish;
 import com.hust.software.wishbottle.pojo.user.WishReport;

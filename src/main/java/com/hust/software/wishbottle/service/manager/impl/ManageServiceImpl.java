@@ -1,5 +1,8 @@
 package com.hust.software.wishbottle.service.manager.impl;
 
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hust.software.wishbottle.mapper.manager.ManageMapper;
 import com.hust.software.wishbottle.pojo.manage.Manage;
 import com.hust.software.wishbottle.service.manager.ManageService;
@@ -39,23 +42,35 @@ public class ManageServiceImpl implements ManageService {
         return manageMapper.selectOne(id);
     }
     @Override
-    public List<Manage> selectAll(){
-        return manageMapper.selectAll();
+    public PageInfo<Manage> selectAll(Integer pageIndex, Integer pageSize){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Manage> manages = manageMapper.selectAll();
+        PageInfo<Manage> info = new PageInfo<Manage>(manages);
+        return info;
     }
     @Override
     public Manage selectOneByName(String manager_account){
         return manageMapper.selectOneByName(manager_account);
     }
     @Override
-    public List<Manage> selectListByID(int id){
-        return manageMapper.selectListByID(id);
+    public PageInfo<Manage> selectListByID(Integer pageIndex, Integer pageSize,int id){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Manage> manages = manageMapper.selectListByID(id);
+        PageInfo<Manage> info = new PageInfo<Manage>(manages);
+        return info;
     }
     @Override
-    public List<Manage> selectListByName(String manager_account){
-        return manageMapper.selectListByName(manager_account);
+    public PageInfo<Manage> selectListByName(Integer pageIndex, Integer pageSize,String manager_account){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Manage> manages = manageMapper.selectListByName(manager_account);
+        PageInfo<Manage> info = new PageInfo<Manage>(manages);
+        return info;
     }
     @Override
-    public List<Manage> selectListByType(int manager_type){
-        return manageMapper.selectListByType(manager_type);
+    public PageInfo<Manage> selectListByType(Integer pageIndex, Integer pageSize,int manager_type){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Manage> manages = manageMapper.selectListByType(manager_type);
+        PageInfo<Manage> info = new PageInfo<Manage>(manages);
+        return info;
     }
 }

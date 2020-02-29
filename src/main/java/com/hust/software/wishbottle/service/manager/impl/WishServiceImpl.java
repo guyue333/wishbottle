@@ -1,5 +1,7 @@
 package com.hust.software.wishbottle.service.manager.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hust.software.wishbottle.mapper.manager.WishMapper;
 import com.hust.software.wishbottle.pojo.user.Tag;
 import com.hust.software.wishbottle.pojo.user.Wish;
@@ -30,20 +32,32 @@ public class WishServiceImpl implements WishService {
     }
 
     @Override
-    public List<Wish> selectAll(){
-        return wishMapper.selectAll();
+    public PageInfo<Wish> selectAll(Integer pageIndex, Integer pageSize){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Wish> wishes = wishMapper.selectAll();
+        PageInfo<Wish> info = new PageInfo<Wish>(wishes);
+        return info;
     }
     @Override
-    public List<Wish> selectAllByID(int wish_id){
-        return wishMapper.selectAllByID(wish_id);
+    public PageInfo<Wish> selectAllByID(Integer pageIndex, Integer pageSize,int wish_id){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Wish> wishes = wishMapper.selectAllByID(wish_id);
+        PageInfo<Wish> info = new PageInfo<Wish>(wishes);
+        return info;
     }
     @Override
-    public List<Wish> selectAllByContent(String wish_content){
-        return wishMapper.selectAllByContent(wish_content);
+    public PageInfo<Wish> selectAllByContent(Integer pageIndex, Integer pageSize,String wish_content){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Wish> wishes = wishMapper.selectAllByContent(wish_content);
+        PageInfo<Wish> info = new PageInfo<Wish>(wishes);
+        return info;
     }
     @Override
-    public List<Wish> selectAllByStatus(int wish_status){
-        return wishMapper.selectAllByStatus(wish_status);
+    public PageInfo<Wish> selectAllByStatus(Integer pageIndex, Integer pageSize,int wish_status){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<Wish> wishes = wishMapper.selectAllByStatus(wish_status);
+        PageInfo<Wish> info = new PageInfo<Wish>(wishes);
+        return info;
     }
 //------------------------------------
     @Override
@@ -51,14 +65,25 @@ public class WishServiceImpl implements WishService {
         return wishMapper.deleteReportWish(report_id);
     }
     @Override
-    public List<WishReport> selectReportByID(int report_id){
-        return wishMapper.selectReportByID(report_id);
+    public PageInfo<WishReport> selectReportByID(Integer pageIndex, Integer pageSize, int report_id){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<WishReport> wishReports = wishMapper.selectReportByID(report_id);
+        PageInfo<WishReport> info = new PageInfo<WishReport>(wishReports);
+        return info;
     }
     @Override
-    public List<WishReport> selectReportByReason(String report_reason){ return wishMapper.selectReportByReason(report_reason);}
+    public PageInfo<WishReport> selectReportByReason(Integer pageIndex, Integer pageSize,String report_reason){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<WishReport> wishReports = wishMapper.selectReportByReason(report_reason);
+        PageInfo<WishReport> info = new PageInfo<WishReport>(wishReports);
+        return info;
+    }
     @Override
-    public List<WishReport> selectReportAll(){
-        return wishMapper.selectReportAll();
+    public PageInfo<WishReport> selectReportAll(Integer pageIndex, Integer pageSize){
+        PageHelper.startPage(pageIndex,pageSize);
+        List<WishReport> wishReports = wishMapper.selectReportAll();
+        PageInfo<WishReport> info = new PageInfo<WishReport>(wishReports);
+        return info;
     }
     @Override
     public List<HashMap> classifyTag(){return wishMapper.classifyTag();}

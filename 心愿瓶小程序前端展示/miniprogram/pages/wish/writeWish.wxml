@@ -1,0 +1,31 @@
+<!--miniprogram/pages/wish/writeWish.wxml-->
+<view class="flex justify-end padding text-sm text-gray" bindtap="toHotTopic">看看大家都有哪些心愿</view>
+
+<form bindsubmit="formSubmit" name="form">
+  <!-- 多行文本输入框 -->
+  <view class="bg-grey light" style="height:250px;">
+    <view class="padding text-gray">心愿内容</view>
+    <view class="padding text-sm text-gray">
+      <input style="color:black" name="wishContent" value="{{wishContent}}" placeholder="如果你有想实现的心愿，可以写在这里" maxlength="500" bindinput="inputChange"></input>
+    </view>
+  </view>
+  <!-- 输入提示 -->
+  <view class="flex justify-end padding text-sm text-gray">最大输入长度为500</view>
+
+  <!-- 标签栏 -->
+  <view class="bg-grey light cu-form-group">
+    <view class="title">标签</view>
+    <picker mode="selector" name="tag" value="{{index}}" range="{{tags}}" range-key="tagMeaning" bindchange="tagsChange">
+      <view class="picker">
+        {{index?tags[index].tagMeaning:"请选择标签"}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- <view>创建时间是：{{createTime}}</view> -->
+
+  <!-- 提交按钮 -->
+  <button class="cu-btn flex flex-direction content bg-orange margin" style="width:300px;" form-type="submit">
+      <text class="text-white">发布心愿</text>
+    </button> 
+</form>

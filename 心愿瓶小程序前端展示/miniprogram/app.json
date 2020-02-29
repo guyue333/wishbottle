@@ -1,0 +1,69 @@
+{
+  "pages": [
+    "pages/wish/wish",
+    "pages/treehole/treehole",
+    "pages/myself/myWish/myWish",
+    "pages/myself/myself/home",
+    "pages/index/index",
+    "pages/wish/writeWish",
+    "pages/treehole/writeTreehole",
+    "pages/treehole/treeholeDetail",
+    "pages/myself/myTreehole/myTreehole",
+    "pages/myself/modifyData/modifyData",
+    "pages/myself/test/list",
+    "pages/myself/test/filter",
+    "pages/myself/aboutUs/aboutUs",
+    "pages/myself/upload/upload",
+    "pages/myself/customerService/customerService",
+    "pages/wish/wishDetail"
+  ],
+  "plugins": {
+    "chatbot": {
+      "version": "1.1.12",
+      "provider": "wx8c631f7e9f2465e1"
+    },
+    "WechatSI": {
+      "version": "0.3.1",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
+  "requiredBackgroundModes": [
+    "audio"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "心愿瓶小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {},
+  "tabBar": {
+    "color": "#aaa",
+    "selectedColor": "#39b54a",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/treehole/treehole",
+        "text": "树洞",
+        "iconPath": "/images/tabbar/treehole.png",
+        "selectedIconPath": "/images/tabbar/treehole_selected.png"
+      },
+      {
+        "pagePath": "pages/wish/wish",
+        "text": "心愿瓶",
+        "iconPath": "/images/tabbar/wish.png",
+        "selectedIconPath": "/images/tabbar/wish_selected.png"
+      },
+      {
+        "pagePath": "pages/myself/myself/home",
+        "text": "个人中心",
+        "iconPath": "/images/tabbar/myself.png",
+        "selectedIconPath": "/images/tabbar/myself_selected.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

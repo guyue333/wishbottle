@@ -22,41 +22,40 @@
         <div class="layui-tab-item" id="agechart" style="position:absolute;top:150px;left:200px;width:600px; height: 400px;"></div>
     </div>
 </div>
+
+
     <script type="text/javascript" src="/js/usercharts.js"></script>
     <script>
-        //用户在第一次点击时加载数据
-            //异步加载数据
-            $.ajax({
-                async: false,
-                url: "/user/userchartTest",
-                type: 'POST',
-                dataType: 'json',
-                success: function (data) {
-                    myChart.hideLoading();  // 隐藏 loading 效果
-                    // 填入数据
-                    eval(data);
-                    var boy = 0;
-                    var girl = 0;
-                    for(var i = 0;i < data.length;i++){
-                        if (data[i].userGender == 0){
-                            girl++;
-                        }else {
-                            boy++;
-                        }
+        $.ajax({
+            async: false,
+            url: "/user/userchartTest",
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                // 填入数据
+                eval(data);
+                var boy = 0;
+                var girl = 0;
+                for(var i = 0;i < data.length;i++){
+                    if (data[i].userGender == 0){
+                        girl++;
+                    }else {
+                        boy++;
                     }
-                    myChart.setOption({
-                        series: [{
-                            name: ['男'],
-                            type: 'bar',
-                            data: [boy]
-                        },{
-                            name: ['女'],
-                            type: 'bar',
-                            data: [girl]
-                        }]
-                    });
                 }
-            });
+                myChart.setOption({
+                    series: [{
+                        name: ['男'],
+                        type: 'bar',
+                        data: [boy]
+                    },{
+                        name: ['女'],
+                        type: 'bar',
+                        data: [girl]
+                    }]
+                });
+            }
+        });
     </script>
 </body>
 </html>

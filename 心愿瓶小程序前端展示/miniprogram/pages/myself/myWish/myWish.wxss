@@ -1,0 +1,12 @@
+/* miniprogram/pages/myself/myWish/myWish.wxss */
+/* 心愿内容的样式开始 */
+.wishText{ 
+    margin: 10px;
+    display: -webkit-box;    /* 设置为弹性盒子 */
+    -webkit-line-clamp:1;   /* 最多显示行 */
+    overflow: hidden;       /* 超出隐藏 */
+    text-overflow: ellipsis;     /* 超出显示为省略号 */
+    -webkit-box-orient: vertical;    
+    word-break: break-word;       /* 强制英文单词自动换行 */
+  }
+/* 心愿内容的样式结束 */

@@ -1,0 +1,4 @@
+<!--miniprogram/pages/index/index.wxml-->
+<view class="flex justify-center align-center">
+  <button class="cu-btn bg-orange light" bindtap="useMiniprogram">进入小程序</button>
+</view>

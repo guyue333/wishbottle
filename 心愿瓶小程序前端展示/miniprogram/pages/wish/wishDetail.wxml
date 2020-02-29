@@ -1,0 +1,95 @@
+<!--miniprogram/pages/wish/wishDetail.wxml-->
+<view class="cu-card">
+  <view wx:for="1"  wx:key class="cu-item shadow">
+  <!-- 心愿发布者的头像昵称 -->
+    <view class="cu-list menu menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url({{wishInfo.userAvatar}});"></view>
+        <view class='content flex-sub'>
+          <view>{{wishInfo.userName}}</view>
+          <view class='text-gray text-sm flex justify-between'>
+            {{wishInfo.createTime}} 
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 心愿的内容 -->
+    <view class='text-content padding'>
+      {{wishInfo.wishContent}}
+    </view>
+
+    <!-- 心愿的点赞、留言、举报图标-->
+    <view class='text-gray text text-right padding'>
+      <!-- <text class="icon-appreciate{{isZan?'fill':''}} text-{{isZan?'red':'gray'}}" data-isZan="{{isZan}}" bindtap="likeWish"></text> 
+      {{likedNumber}}
+      <text class="icon-comment"></text> {{commentNumber}} -->
+      <text class="icon-warn" bindtap="showModal" data-target="DialogModal1"></text>
+    </view> 
+
+    <!-- 判断是否有留言，如果没有留言时显示“暂无留言” -->
+    <block wx:if="{{hasComment}}">
+      <!-- 心愿的回复列表 -->
+      <view class="cu-list menu menu-avatar comment solids-top">
+        <!-- 树洞的每一条回复，这里是用列表渲染进行展示的，应该对应着数据库中的数据 -->
+        <view class="cu-item" wx:for="{{replyInfo}}" wx:for-item="replyInfo" wx:key>
+          <view class="cu-avatar round" style="background-image:url({{replyInfo.userAvatar}});"></view>
+          <view class='content'>
+            <view class='text-grey'>{{replyInfo.userName}}</view>
+            <view class='text-gray text-content text-df'>
+              {{replyInfo.replyContent}}
+            </view>
+            <view class='margin-top-sm flex justify-between'>
+              <view class='text-gray text-df'>{{replyInfo.createTime}}</view>
+              <!-- <view> -->
+                <!-- 点赞评论是候选功能，预计可能会实现 -->
+                <!-- <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text> -->
+                <!-- 回复评论是候选功能，预计不会实现 -->
+                <!-- <text class="icon-comment text-gray margin-left-sm"></text> -->
+                <!-- 举报评论是候选功能，预计不会实现 -->
+                <!-- <text class="icon-warn text-gray margin-left-sm" bindtap="reportComment"></text> -->
+              <!-- </view> -->
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 如果没有评论 -->
+    <block wx:else="{{hasComment}}">
+      <view class="text-center padding">当前暂无评论，快来评论吧！</view>
+    </block>
+  </view>
+
+  <view style="height:70px;"></view>
+</view>
+
+<!-- 留言输入框-->
+  <view class="message-all">
+    <view class="message-input">
+      <input style="height:40px;width:{{inputWidth}}px;" class="padding-left" bindinput="inputChange" placeholder="在这里输入你的留言" name="reply"></input>
+    </view>
+    <!-- 在这里判断一下用户是否已经授权，如果没有授权，弹窗提示用户现在个人中心进行授权 -->
+    <view class="message-but" bindtap="send">发送</view>
+  </view>
+<!--留言输入框结束 -->
+
+<!-- 举报原因 -->
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class='content'>举报心愿</view>
+      <view class='action' bindtap='hideModal'>
+        <text class='icon-close text-red'></text>
+      </view>
+    </view>
+    <view class='padding-xl'>
+      <input placeholder="举报详细说明（20字以内）" maxlength="20" bindinput="reportChange" ></input>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class='action'>
+        <text class='cu-btn line-green text-green' bindtap='hideModal'>取消</text>
+        <text class='cu-btn bg-green margin-left' bindtap='reportWish'>确定</text>
+      </view>
+    </view>
+  </view>
+</view>

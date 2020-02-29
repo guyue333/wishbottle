@@ -1,5 +1,6 @@
 package com.hust.software.wishbottle.controller.manage;
 
+import com.github.pagehelper.PageInfo;
 import com.hust.software.wishbottle.pojo.user.TreeHole;
 import com.hust.software.wishbottle.pojo.user.TreeHoleReport;
 import com.hust.software.wishbottle.service.manager.TreeHoleService;
@@ -19,18 +20,11 @@ public class TreeHoleController {
     @Autowired
     private TreeHoleService treeHoleService;
 
-    //查询所有树洞信息
-    @RequestMapping("treeholeList")
-    public String treeholeList(Model model){
-        List<TreeHole> treeHoles = treeHoleService.selectAllTreeHole();
-        model.addAttribute("treeHoles",treeHoles);
-        return "treeholelist";
-    }
     //单条删除树洞信息
     @GetMapping("treeholeDeleteone/{id}")
     public String treeholeDeleteone(@PathVariable("id") int treehole_id){
         treeHoleService.deleteTreeHole(treehole_id);
-        return "redirect:/treehole/treeholeList";
+        return "redirect:/treehole/treeholeConditionList";
     }
     //批量删除树洞信息
     @PostMapping("treeholeDeletemore")
@@ -43,25 +37,27 @@ public class TreeHoleController {
             id = Integer.valueOf(st.nextToken());
             treeHoleService.deleteTreeHole(id);
         }
-        return "redirect:/treehole/treeholeList";
+        return "redirect:/treehole/treeholeConditionList";
     }
     //按条件查询心愿的相关信息
-    @PostMapping("treeholeConditionList")
-    public String treeholeConditionList(@RequestParam("modules") String modules,
-                                    @RequestParam("keywordtxt") String keywordtxt,
-                                    @RequestParam("keywordnum") String keywordnum,
-                                    @RequestParam("keywordnum1") String keywordnum1,
+    @RequestMapping("treeholeConditionList")
+    public String treeholeConditionList(@RequestParam(value="pageIndex",defaultValue="1") Integer pageIndex,
+                                        @RequestParam(value="pageSize",defaultValue="9") Integer pageSize,
+                                        @RequestParam(value="modules",defaultValue="0") String modules,
+                                        @RequestParam(value="keywordtxt",defaultValue="") String keywordtxt,
+                                        @RequestParam(value="keywordnum",defaultValue="0") String keywordnum,
+                                        @RequestParam(value="keywordnum1",defaultValue="-1") String keywordnum1,
                                     Model model){
         int value = Integer.valueOf(modules);
-        List<TreeHole> treeHoles = treeHoleService.selectAllTreeHole();
-        if (keywordnum != "" && value == 1){//id
-            int keynum = Integer.valueOf(keywordnum);
-            treeHoles = treeHoleService.selectAllByID(keynum);
+        int keynum = Integer.valueOf(keywordnum);
+        int keynum1 = Integer.valueOf(keywordnum1);
+        PageInfo<TreeHole> treeHoles = treeHoleService.selectAllTreeHole(pageIndex,pageSize);
+        if (keynum != 0 && value == 1){//id
+            treeHoles = treeHoleService.selectAllByID(pageIndex,pageSize,keynum);
         }else if (keywordtxt != "" && value == 2){//内容
-            treeHoles = treeHoleService.selectAllByContent(keywordtxt);
-        }else if (keywordnum1 != "" && value == 3){
-            int keynum1 = Integer.valueOf(keywordnum1);//状态
-            treeHoles = treeHoleService.selectAllByStatus(keynum1);
+            treeHoles = treeHoleService.selectAllByContent(pageIndex,pageSize,keywordtxt);
+        }else if (keynum1 != -1 && value == 3){//状态
+            treeHoles = treeHoleService.selectAllByStatus(pageIndex,pageSize,keynum1);
         }
         model.addAttribute("treeHoles",treeHoles);
         return "treeholelist";
@@ -69,19 +65,11 @@ public class TreeHoleController {
 
     //---------------------------------------------------------
 
-    //查询所有举报树洞信息
-    @RequestMapping("treeHoleReportList")
-    public String treeHoleReportList(Model model){
-        List<TreeHoleReport> treeHoleReports = treeHoleService.selectAllTreeHoleReport();
-        model.addAttribute("treeHoleReports",treeHoleReports);
-        return "treeholereportlist";
-    }
-
     //单条删除树洞举报信息
     @GetMapping("treeholeReportDeleteone/{id}")
     public String treeholeReportDeleteone(@PathVariable("id") int report_id){
         treeHoleService.deleteReportTreeHole(report_id);
-        return "redirect:/treehole/treeHoleReportList";
+        return "redirect:/treehole/treeholeReportConditionList";
     }
     //批量删除树洞举报信息
     @PostMapping("treeholeReportDeleteone")
@@ -94,21 +82,23 @@ public class TreeHoleController {
             id = Integer.valueOf(st.nextToken());
             treeHoleService.deleteReportTreeHole(id);
         }
-        return "redirect:/treehole/treeHoleReportList";
+        return "redirect:/treehole/treeholeReportConditionList";
     }
     //条件查询
-    @PostMapping("treeholeReportConditionList")
-    public String treeholeReportConditionList(@RequestParam("modules") String modules,
-                                          @RequestParam("keywordtxt") String keywordtxt,
-                                          @RequestParam("keywordnum") String keywordnum,
+    @RequestMapping("treeholeReportConditionList")
+    public String treeholeReportConditionList(@RequestParam(value="pageIndex",defaultValue="1") Integer pageIndex,
+                                              @RequestParam(value="pageSize",defaultValue="9") Integer pageSize,
+                                              @RequestParam(value="modules",defaultValue="0") String modules,
+                                          @RequestParam(value="keywordtxt",defaultValue="") String keywordtxt,
+                                          @RequestParam(value="keywordnum",defaultValue="0") String keywordnum,
                                           Model model){
         int value = Integer.valueOf(modules);
-        List<TreeHoleReport> treeHoleReports = treeHoleService.selectAllTreeHoleReport();
-        if (keywordnum != "" && value == 1){//id
-            int keynum = Integer.valueOf(keywordnum);
-            treeHoleReports = treeHoleService.selectReportByID(keynum);
+        int keynum = Integer.valueOf(keywordnum);
+        PageInfo<TreeHoleReport> treeHoleReports = treeHoleService.selectAllTreeHoleReport(pageIndex,pageSize);
+        if (keynum != 0 && value == 1){//id
+            treeHoleReports = treeHoleService.selectReportByID(pageIndex,pageSize,keynum);
         }else if (keywordtxt != "" && value == 2){//内容
-            treeHoleReports = treeHoleService.selectReportByReason(keywordtxt);
+            treeHoleReports = treeHoleService.selectReportByReason(pageIndex,pageSize,keywordtxt);
         }
         model.addAttribute("treeHoleReports",treeHoleReports);
         return "treeholereportlist";

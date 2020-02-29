@@ -1,0 +1,47 @@
+<!-- 引入截取字符串的函数 -->
+<wxs src="../../wxs/util.wxs" module="tools"></wxs> 
+
+<view class="padding" style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;">
+
+  <block wx:for="{{treeholeInfo}}" wx:for-item="treeholeInfo" wx:key >
+    <view style="height:250px;width:{{treeholeWidth}}px;display:flex;justify-content:center;" bindtap="toTreeholeDetail" data-treeholeId="{{treeholeInfo.treeholeId}}">
+      <!-- 展示板 -->
+      <view class="first bg-{{ColorList[index].name}}" style="width:{{treeholeWidth-20}}px;height:220px;display:flex;flex-direction:column;justify-content:space-between">
+        <!-- 头像、昵称、发表时间 -->
+        <view class="cu-list menu-avatar">
+          <view class="cu-item" style="height:40px;margin:10px 0 0 0;">
+            <view class="cu-avatar round" style="background-image:url({{avatarUrl}});"></view>
+            <view class='content flex-sub'>
+              <view class="text-gray">{{nickName}}</view>
+              <view class='text-gray text-sm'>{{tools.substring(treeholeInfo.createTime,0,10)}}</view>
+            </view>
+          </view>
+        </view>
+        <!-- 树洞内容 -->
+        <view class="treeholeText text-white text">
+          {{treeholeInfo.treeholeContent}}
+        </view>
+        <!-- 点赞、留言图标 -->
+        <view style="padding:30rpx;" class="text-white">
+          <text class="icon-appreciate lg"></text>
+          <text class="text-sm" style="padding-left:5px;">{{treeholeInfo.likedNumber}}</text>
+          <text class="icon-comment " style="padding-left:5px;"></text>
+          <text class="text-sm" style="padding-left:5px;">{{treeholeInfo.replyNumber}}</text>
+        </view>
+      </view>
+
+      <!-- 背景板 -->
+      <view class="first second bg-red light" style="width:{{treeholeWidth-20}}px;height:220px;"></view>
+
+      <!-- 贴纸 -->
+      <view class="third bg-white light"></view>
+    </view>
+  </block>
+
+  <!-- 写树洞按钮 -->
+  <view style="opacity: 0.5;position: fixed;bottom: 15px;left:{{buttonFromLeft}}px;z-index: 3;">
+    <button class="cu-btn round  text-sm" role="button" style="width:100px;" bindtap="writeTreehole">
+      <text class="icon-add text-black">我要写</text>
+    </button>
+  </view>
+</view>

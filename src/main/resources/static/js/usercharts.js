@@ -27,7 +27,36 @@ myChart.setOption({
         data: []
     }]
 });
-// myChart.showLoading();
+$.ajax({
+    async: false,
+    url: "/user/userchartTest",
+    type: 'POST',
+    dataType: 'json',
+    success: function (data) {
+        // 填入数据
+        eval(data);
+        var boy = 0;
+        var girl = 0;
+        for(var i = 0;i < data.length;i++){
+            if (data[i].userGender == 0){
+                girl++;
+            }else {
+                boy++;
+            }
+        }
+        myChart.setOption({
+            series: [{
+                name: ['男'],
+                type: 'bar',
+                data: [boy]
+            },{
+                name: ['女'],
+                type: 'bar',
+                data: [girl]
+            }]
+        });
+    }
+});
 $("#sexbtn").click(function () {
     //异步加载数据
     $.ajax({
@@ -36,7 +65,6 @@ $("#sexbtn").click(function () {
         type: 'POST',
         dataType: 'json',
         success: function (data) {
-            myChart.hideLoading();  // 隐藏 loading 效果
             // 填入数据
             eval(data);
             var boy = 0;
@@ -62,7 +90,6 @@ $("#sexbtn").click(function () {
         }
     });
 });
-myChart2.showLoading();
 $("#provincebtn").click(function () {
     $.ajax({
         async: false,
@@ -70,7 +97,6 @@ $("#provincebtn").click(function () {
         type: 'POST',
         dataType: 'json',
         success: function (data) {
-            myChart2.hideLoading();  // 隐藏 loading 效果
             eval(data);
             myChart2.setOption({
                 title: {
@@ -106,7 +132,6 @@ $("#provincebtn").click(function () {
         }
     });
 })
-myChart4.showLoading();
 $("#agebtn").click(function () {
     $.ajax({
         async: false,
@@ -114,7 +139,6 @@ $("#agebtn").click(function () {
         type: 'POST',
         dataType: 'json',
         success: function (data) {
-            myChart4.hideLoading();
             eval(data);
             var age = [];
             var count = [];
@@ -144,4 +168,4 @@ $("#agebtn").click(function () {
             });
         }
     });
-});
+})

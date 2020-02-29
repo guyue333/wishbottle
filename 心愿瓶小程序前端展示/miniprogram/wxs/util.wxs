@@ -1,0 +1,12 @@
+/**
+ * 用于在wxml页面上截取字符串
+ */
+var substring = function(str,start,end){
+  if(str.length == 0 || str == undefined){
+    return;
+  }
+
+  return str.substring(start,end)
+}
+
+module.exports.substring = substring

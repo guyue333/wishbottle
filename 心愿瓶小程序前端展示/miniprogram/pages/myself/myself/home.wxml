@@ -1,0 +1,58 @@
+<!--miniprogram/pages/myself/myself.wxml-->
+<view class='UCenter-bg'>
+  <!-- 用户头像和昵称 -->
+  <view class=' padding-lg margin-xs radius'><button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      class="cu-avatar xl round margin-left"
+      style="background-image: url({{avatarUrl}})" 
+      size="default"
+    ></button></view>
+      <view class='text-xl'>{{nickName}}</view>
+  <image src='/images/wave.gif' mode='scaleToFill' class='gif-wave'></image>
+</view>
+
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
+  <view class="cu-item arrow">
+    <button class='cu-btn content' bindtap='toModifyData'>
+      <text class='icon-profile text-yellow'></text>
+      <text class='text-grey'>修改资料</text>
+    </button>
+  </view>
+  <view class="cu-item arrow"  style="border-bottom:1px solid rgba(255,255,255,0.5)">
+    <button class="cu-btn content" open-type="share">
+      <text class='icon-share text-grey'></text>
+      <text class='text-grey'>好友分享</text>
+    </button>
+  </view>
+  <view class="cu-item arrow">
+    <button bindtap="toMyWish" class='cu-btn content'>
+      <text class='icon-like text-cyan'></text>
+      <text class='text-grey'>我的心愿</text>
+    </button>
+  </view>
+  <view class="cu-item arrow">
+    <button class='cu-btn content' bindtap="toMyTreehole">
+      <text class='icon-creativefill text-orange'></text>
+      <text class='text-grey'>我的树洞</text>
+    </button>
+  </view>
+  <view class="cu-item arrow">
+    <button class='cu-btn content' bindtap="toAboutUs">
+      <text class='icon-focus text-blue'></text>
+      <text class='text-grey'>关于我们</text>
+    </button>
+  </view>
+  <view class="cu-item arrow" style="border-bottom:1px solid rgba(255,255,255,0.5)">
+    <button class='cu-btn content' bindtap="showQrcode">
+      <text class='icon-qr_code text-red'></text>
+      <text class='text-grey'>联系作者</text>
+    </button>
+  </view>
+  <view class="cu-item arrow" style="border-bottom:1px solid rgba(255,255,255,0.5)">
+    <button class='cu-btn content' bindtap="toCustomerService">
+      <text class='icon-moreandroid text-olive'></text>
+      <text class='text-grey'>机器人客服</text>
+    </button>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+/* miniprogram/pages/myself/modifyData/modifyData.wxss */
+/* 设置头像框的样式 */
+.avatar{
+  height: 150px;
+  display: flex;
+  flex-direction: column;  /* 设置主轴方向为纵向 */
+  justify-content: center;   /* 定义项目在主轴上的对其方式*/
+  align-items: center;     /* 定义项目在交叉轴上的对其方式 */
+}

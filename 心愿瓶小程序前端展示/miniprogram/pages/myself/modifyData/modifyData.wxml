@@ -1,0 +1,53 @@
+<!--miniprogram/pages/myself/modifyData/modifyData.wxml-->
+<view class='bg-grey light' style="height:{{height}}px">
+  <!-- 头像框的样式 -->
+  <view class="avatar">
+    <view class="cu-avatar xl round" style="background-image:url({{avatarUrl}});" bindtap="changePhoto"></view>
+    <view class="margin-top-lg"></view>
+    <text class="text-red">请不要使用违规头像，一经发现严肃处理</text>
+  </view>
+  
+  <!-- 基本资料框的样式 -->
+  <form bindsubmit="formSubmit" name="form">
+    <!-- 用户昵称 -->
+    <view class="cu-form-group margin-top">
+      <view class="title">昵称</view>
+      <input class="radius" name="nickName" value="{{nickName}}" placeholder="{{nickName}}"></input>
+    </view>
+    <!-- 出生日期 -->
+    <view class="cu-form-group">
+      <view class="title">出生日期</view>
+      <picker mode="date" name="birthday" value="{{date}}" start="1970-01-01" end="2010-01-01" bindchange="DateChange">
+        <view class="picker">
+          <text class="text-bold text-center">{{date}}</text>
+        </view>
+      </picker>
+    </view>
+    <!-- 所在城市 -->
+    <view class="cu-form-group">
+      <view class="title">所在城市</view>
+      <picker mode="region" name="city" value="{{region}}" custom-iten="{{customItem}}" bindchange="RegionChange">
+        <view class="picker">
+          {{region[0]}}，{{region[1]}}，{{region[2]}}
+        </view>
+      </picker>
+    </view>
+    <!-- 性别 -->
+    <view class="cu-form-group">
+      <view class="title">性别</view>
+      <picker mode="selector" name="gender" value="{{index}}" range="{{picker}}" bindchange="PickerChange">
+        <view class="picker">
+          {{index?picker[index]:"请选择性别"}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 提交按钮 -->
+    <!-- <view class="padding flex flex-direction">
+      <button style="300px;" class="cu-btn bg-blue margin-tb-sm xl" role="button"aria-disabled="false" form-type="submit">保存资料</button>
+    </view> -->
+    <button class="cu-btn flex flex-direction content bg-orange margin" style="width:300px;" form-type="submit">
+      <text class="text-white">保存资料</text>
+    </button> 
+  </form>
+</view>

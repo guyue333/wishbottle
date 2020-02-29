@@ -9,14 +9,18 @@ layui.use(['layer','form'], function(){
     form.verify({
     	//这里的变量名和前面的lay-verify中一致，默认是required是不能为空
     	managename:function(value){
-    		if (value.length <4) {
+    		if (value.length < 4) {
     			return '请输入至少4位用户名！	';
-    		}
+    		}else if(value.length > 10){
+    			return '请输入不要超过10位用户名！ ';
+			}
     	},
     	managepwd:function(value){
     		if (value.length <6) {
     			return '请输入至少6位密码！	';
-    		}
+    		}else if(value.length > 12){
+				return '请输入不要超过12位密码！ ';
+			}
     	},
 		whitever:function(value){
 			if (value.length == 0) {

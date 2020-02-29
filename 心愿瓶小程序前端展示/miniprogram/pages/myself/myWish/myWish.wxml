@@ -1,0 +1,46 @@
+<!--miniprogram/pages/myself/myWish/myWish.wxml-->
+
+<!-- 当用户没有发布过心愿时，给出提示信息 -->
+<view wx:if="{{!havePublish}}" class="text-center padding"> 
+  <text class="text-grey">您还没有发布过心愿，快去尝试一下吧</text>
+</view>
+
+<!-- 心愿列表 -->
+<view class="cu-card article"> 
+  <view wx:for="{{wishInfo}}" wx:for-item="wishInfo" wx:key class="cu-item shadow" bindtap="toDetail" 
+  data-wishid="{{wishInfo.wishId}}" data-target="bottomModal" bindlongpress="showModal">
+    <view class="flex padding-top padding-left padding-right">
+      <view class="flex justify-center padding-right">
+        <!-- 头像框 -->
+        <view class="cu-avatar lg round" style="background-image:url({{wishInfo.userAvatar}});"></view>
+      </view>
+      <view>
+        <view class="flex justify-start">
+          <!-- 用户昵称 -->
+          <view class="text-sm text-gray light margin-right">{{wishInfo.userName}}</view>
+          <!-- 时间 -->
+          <view class="text-sm text-gray light margin-left">{{wishInfo.createTime}}</view>
+        </view>
+        <!-- 心愿内容 -->
+        <view class='wishText text-content'> {{wishInfo.wishContent}}</view>
+        <!-- 标签 -->
+        <view>
+          <view class='cu-tag bg-{{ColorList[index].name}} light sm round'>{{wishInfo.tagMeaning}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+ 
+<!-- 长按提示用户是否删除心愿 -->
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class='action text-green' bindtap="deleteWish">确定</view>
+      <view class='action text-blue' bindtap='hideModal'>取消</view>
+    </view>
+    <view class='padding-xl'>
+      <text>你确定要删除这条心愿吗</text>
+    </view>
+  </view>
+</view>

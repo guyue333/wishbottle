@@ -53,4 +53,8 @@ public interface UserMapper {
 
     @Select("select user_age,count(*) from user group by user_age order by user_age")
     List<HashMap> classifyAge();
+
+    //测试分页
+    @Select("select * from user")
+    List<User> selectPage();
 }

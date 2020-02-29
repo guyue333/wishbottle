@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>树洞管理 - 树洞信息列表</title>
     <link rel="stylesheet" href="/layui/css/layui.css"/>
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <style>
         a{color: white;}
         a:hover{color: black;}
@@ -16,7 +17,7 @@
         <!-- 内容主体区域 -->
         <div style="padding: 20px;">
             <fieldset class="layui-elem-field">
-                <legend>树洞管理 - 树洞信息列表</legend>
+                <h3 style="margin-left:20px;">树洞管理 - 树洞信息列表</h3>
                 <div class="layui-field-box">
                     <form class="layui-form" action="/treehole/treeholeConditionList" method="post">
                         <div class="layui-form-item" style="text-align:center;">
@@ -50,7 +51,7 @@
                             <i class="layui-icon">&#xe640;</i>删除
                         </button>
                         <button class="layui-btn layui-btn-xs">
-                            <a href="/treehole/treeholeList"><i class="layui-icon">&#x1002;</i>刷新</a>
+                            <a href="/treehole/treeholeConditionList"><i class="layui-icon">&#x1002;</i>刷新</a>
                         </button>
                     </div>
                     <hr>
@@ -78,7 +79,7 @@
                         </tr>
                         </thead>
                         <tbody class="tbodyforchoose">
-                        <tr th:each="treeHole,userStat:${treeHoles}">
+                        <tr th:each="treeHole,userStat:${treeHoles.list}">
                             <td><input type="checkbox" name="datas" th:value="${treeHole.treeholeId}" lay-skin="primary"></td>
                             <td th:text="${treeHole.treeholeId}"></td>
                             <td th:text="${treeHole.writerId}"></td>
@@ -98,6 +99,26 @@
                         </tr>
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a th:href="@{/treehole/treeholeConditionList(pageIndex=${treeHoles.pageNum-1},pageSize=9)}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <th:block th:each="nav : ${treeHoles.navigatepageNums}">
+                                <li th:class="${nav==treeHoles.pageNum}?'active':''">
+                                    <a th:href="@{/treehole/treeholeConditionList(pageIndex=${nav},pageSize=9)}"
+                                       th:text="${nav}"></a>
+                                </li>
+                            </th:block>
+                            <li>
+                                <a th:href="@{/treehole/treeholeConditionList(pageIndex=${treeHoles.pageNum+1},pageSize=9)}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </fieldset>
         </div>

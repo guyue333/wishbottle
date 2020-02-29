@@ -1,0 +1,19 @@
+<!--miniprogram/pages/treehole/writeTreehole.wxml-->
+<view class="flex justify-end padding text-sm text-gray" bindtap="toHotTopic">如果不知道写什么，可以看看热门话题</view>
+
+<form bindsubmit="formSubmit" name="form">
+<!-- 多行文本输入框 -->
+<view class="bg-grey light" style="height:250px;">
+  <view class="padding text-gray">树洞内容</view>
+  <view class="padding text-sm text-gray">
+    <input style="width:{{textareaWidth}}px; color:black;" name="treeholeContent" value="{{treeholeContent}}" placeholder="你可以在这里与大家分享你的心事、烦恼或者秘密" maxlength="500" bindinput="inputChange"></input>
+  </view>
+</view>
+<!-- 输入提示 -->
+<view class="flex justify-end padding text-sm text-gray">最大输入长度为500</view>
+
+ <!-- 提交按钮 -->
+  <button class="cu-btn flex flex-direction content bg-orange margin" style="width:300px;" form-type="submit">
+      <text class="text-white">发布树洞</text>
+    </button> 
+</form>
